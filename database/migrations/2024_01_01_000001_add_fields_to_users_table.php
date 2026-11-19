@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone')->nullable()->after('email');
+            // Keep the initial schema aligned with the roles used by the application.
+            // SQLite implements enum columns as CHECK constraints, so leaving these
+            // roles out prevents fresh test databases from creating admin/pastor users.
+            $table->enum('role', ['kiongozi', 'mshirika', 'admin', 'mchungaji'])->default('mshirika')->after('phone');
+            $table->string('cheo')->nullable()->after('role');
+            $table->string('avatar')->nullable()->after('cheo');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['phone', 'role', 'cheo', 'avatar']);
+        });
+    }
+};
