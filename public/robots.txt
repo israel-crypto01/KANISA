@@ -1,2 +1,25 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /church-office
+Disallow: /official-letters
+Disallow: /contributions
+Disallow: /payments
+Disallow: /receipts
+Disallow: /reports
+Disallow: /announcements
+Disallow: /church-settings
+Disallow: /members
+Disallow: /sms
+Disallow: /help
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /confirm-password
+
+Allow: /
+Allow: /login
+Allow: /verify-letter/
+
+Sitemap: https://www.eagtphiladelphiachurch.co.tz/sitemap.xml

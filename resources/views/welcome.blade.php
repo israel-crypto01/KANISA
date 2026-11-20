@@ -3,7 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'PHILADELPHIA CHURCH') }}</title>
+    <title>Philadelphia Church (EAGT) — Kanisa la Philadelphia Tanzania</title>
+
+    {{-- SEO Meta Tags --}}
+    <meta name="description" content="Kanisa la Philadelphia (EAGT) ni kanisa la Kikristo Tanzania. Pata taarifa za ibada, matangazo, na huduma za kanisa hapa.">
+    <meta name="keywords" content="Philadelphia Church, EAGT, kanisa Tanzania, Philadelphia Tanzania, Evangelical Assemblies of God Tanzania">
+    <meta name="author" content="Philadelphia Church EAGT">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.eagtphiladelphiachurch.co.tz/">
+
+    {{-- Open Graph (for sharing on social media / Google) --}}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.eagtphiladelphiachurch.co.tz/">
+    <meta property="og:title" content="Philadelphia Church (EAGT) — Kanisa la Philadelphia Tanzania">
+    <meta property="og:description" content="Kanisa la Philadelphia (EAGT) ni kanisa la Kikristo Tanzania. Pata taarifa za ibada, matangazo, na huduma za kanisa hapa.">
+    <meta property="og:image" content="https://www.eagtphiladelphiachurch.co.tz/images/eagt_logo.png">
+    <meta property="og:locale" content="sw_TZ">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Philadelphia Church (EAGT)">
+    <meta name="twitter:description" content="Kanisa la Philadelphia (EAGT) — Tanzania">
+    <meta name="twitter:image" content="https://www.eagtphiladelphiachurch.co.tz/images/eagt_logo.png">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
