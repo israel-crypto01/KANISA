@@ -923,6 +923,47 @@
             }
             [id^="campaign-details-"] > * { min-width: 0; }
         }
+
+        /* Fluid sizing follows the available viewport instead of relying only
+           on fixed desktop dimensions. The device label is set on resize. */
+        :root {
+            --page-gutter: clamp(12px, 2.1vw, 32px);
+            --content-gutter: clamp(16px, 1.85vw, 28px);
+            --surface-padding: clamp(16px, 1.6vw, 24px);
+            --layout-gap: clamp(10px, 1.25vw, 18px);
+            --control-height: clamp(40px, 3.2vw, 46px);
+        }
+        html { font-size: clamp(14px, calc(13px + .2vw), 16px); }
+        body { font-size: 1rem; }
+        .topbar { padding-inline: var(--page-gutter); }
+        .content { padding: var(--content-gutter) var(--page-gutter); }
+        .stats-grid, .members-grid { gap: var(--layout-gap); }
+        .stat-card { padding: clamp(14px, 1.5vw, 22px); }
+        .card { padding: var(--surface-padding); }
+        .form-control, select.form-control, input.form-control, textarea.form-control,
+        .btn { min-height: var(--control-height); }
+
+        @media (min-width: 1025px) {
+            .content { width: 100%; }
+        }
+        @media (max-width: 1024px) {
+            :root {
+                --page-gutter: clamp(16px, 2.5vw, 24px);
+                --content-gutter: clamp(18px, 2.5vw, 24px);
+                --surface-padding: clamp(16px, 2vw, 22px);
+            }
+        }
+        @media (max-width: 640px) {
+            :root {
+                --page-gutter: 12px;
+                --content-gutter: 16px;
+                --surface-padding: 16px;
+                --layout-gap: 10px;
+                --control-height: 42px;
+            }
+            body[data-device="phone"] .topbar-title { font-size: clamp(1rem, 4.8vw, 1.18rem); }
+            body[data-device="phone"] .stat-value { font-size: clamp(1.45rem, 7vw, 2rem); }
+        }
     </style>
 </head>
 <body>
