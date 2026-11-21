@@ -143,14 +143,15 @@
             display: none;
             width: 42px;
             height: 42px;
-            border: 1px solid var(--border);
+            border: 2px solid var(--accent);
             border-radius: 10px;
-            background: #ffffff;
-            color: var(--accent);
+            background: var(--accent);
+            color: #ffffff;
             align-items: center;
             justify-content: center;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             cursor: pointer;
+            flex-shrink: 0;
         }
         .mobile-sidebar-backdrop {
             display: none;

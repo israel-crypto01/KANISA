@@ -500,6 +500,12 @@ class DashboardController extends Controller
 
         /** @var User $user */
         $user = Auth::user();
+
+        // Delete old avatar file if it exists
+        if ($user->avatar) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+        }
+
         $avatarPath = $request->file('avatar')->store('avatars', 'public');
         $user->update(['avatar' => $avatarPath]);
 

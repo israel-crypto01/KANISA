@@ -37,6 +37,10 @@ class ProfileController extends Controller
         $request->user()->fill($data);
 
         if ($request->hasFile('avatar')) {
+            // Delete old avatar before storing the new one
+            if ($request->user()->avatar) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($request->user()->avatar);
+            }
             $request->user()->avatar = $request->file('avatar')->store('avatars', 'public');
         }
 
