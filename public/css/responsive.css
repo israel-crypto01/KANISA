@@ -10,6 +10,16 @@ html { font-size: clamp(14px, calc(13px + .2vw), 16px); }
 body { max-width: 100%; overflow-x: hidden; font-size: 1rem; }
 img, video, canvas, svg { max-width: 100%; }
 .page, .main { padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
+.app .side { display: flex; flex-direction: column; min-height: 100vh; background: #1b1f3b; color: #fff; border-right: 0; }
+.side .brand { color: #fff; }
+.side .brand i { color: #818cf8; }
+.side .nav { color: rgba(255,255,255,.72); }
+.side .nav:hover, .side .nav.active { background: #303869; color: #fff; }
+.side .label { color: rgba(255,255,255,.4); }
+.sidebar-logout { margin-top: auto; padding: 18px 0 4px; border-top: 1px solid rgba(255,255,255,.1); }
+.logout-button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 12px; border: 0; border-radius: 8px; background: transparent; color: rgba(255,255,255,.78); font: 650 14px system-ui; text-align: left; cursor: pointer; }
+.logout-button b { display: inline-block; width: 23px; text-align: center; }
+.logout-button:hover { background: rgba(255,255,255,.08); color: #fff; }
 .card, .box, .member, .member-card { padding: var(--surface-padding); }
 .stats, .dept-grid, .columns, .grid, .members, .member-grid,
 .form-grid, .hero { gap: var(--layout-gap); }
@@ -36,4 +46,10 @@ table { max-width: 100%; }
         grid-template-columns: minmax(0, 1fr);
     }
     input, select, textarea, button, .button { max-width: 100%; }
+}
+
+@media (max-width: 700px) {
+    .app .side { min-height: 0; flex-direction: row; align-items: center; }
+    .sidebar-logout { margin: 0 0 0 auto; padding: 0; border: 0; flex: 0 0 auto; }
+    .logout-button { white-space: nowrap; width: auto; }
 }

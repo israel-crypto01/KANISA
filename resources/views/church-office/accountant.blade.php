@@ -12,9 +12,9 @@
 </head>
 <body>
 <div class="app">
-    <aside class="side"><div class="brand">✦ KANISA | FEDHA</div><button class="nav active" onclick="show('overview',this)">▣ Dashibodi</button><div class="label">USIMAMIZI WA FEDHA</div><button class="nav" onclick="show('offerings',this)">◈ Sadaka</button><button class="nav" onclick="show('expenses',this)">▤ Matumizi ya Kanisa</button></aside>
+    <aside class="side"><div class="brand">✦ KANISA | FEDHA</div><button class="nav active" onclick="show('overview',this)">▣ Dashibodi</button><div class="label">USIMAMIZI WA FEDHA</div><button class="nav" onclick="show('offerings',this)">◈ Sadaka</button><button class="nav" onclick="show('expenses',this)">▤ Matumizi ya Kanisa</button><div class="sidebar-logout"><form method="post" action="{{ route('logout') }}">@csrf<button type="submit" class="logout-button"><b>↪</b>Toka</button></form></div></aside>
     <main class="main">
-        <header class="top"><div><div class="eyebrow">OFISI YA FEDHA</div><h1>Dashibodi ya Mhasibu</h1></div><div class="user"><div class="avatar">@if($user->avatar)<img src="{{ asset('storage/'.$user->avatar) }}">@else{{ strtoupper(substr($user->name,0,1)) }}@endif</div><div><strong>{{ $user->name }}</strong><br><small class="muted">Mhasibu wa Kanisa</small></div><a class="logout" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout').submit()">Toka</a><form id="logout" method="post" action="{{ route('logout') }}">@csrf</form></div></header>
+        <header class="top"><div><div class="eyebrow">OFISI YA FEDHA</div><h1>Dashibodi ya Mhasibu</h1></div><div class="user"><div class="avatar">@if($user->avatar)<img src="{{ asset('storage/'.$user->avatar) }}">@else{{ strtoupper(substr($user->name,0,1)) }}@endif</div><div><strong>{{ $user->name }}</strong><br><small class="muted">Mhasibu wa Kanisa</small></div></div></header>
         @if(session('success'))<div class="card notice">✓ {{ session('success') }}</div>@endif
         @if($errors->any())<div class="error">{{ $errors->first() }}</div>@endif
 
