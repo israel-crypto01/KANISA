@@ -69,6 +69,10 @@ class DashboardController extends Controller
         $user->setAttribute('dashboard_view_mode', $dashboardViewMode === 'member' ? 'member' : null);
 
         $allDepartmentIds = Department::pluck('id');
+        if ($allDepartmentIds->isEmpty()) {
+            Department::ensureDefaultsExist();
+            $allDepartmentIds = Department::pluck('id');
+        }
         $requestedDepartmentId = $request->integer('department_id');
         $leadershipDepartments = $user->departments->filter(fn (Department $department) => $department->pivot?->role === 'kiongozi')->values();
         $leaderDepartmentIds = ($user->isAdmin() || $user->isMchungaji())
@@ -505,6 +509,8 @@ class DashboardController extends Controller
     // Onboarding step 2: Complete department & role selection
     public function completeOnboarding(Request $request)
     {
+        Department::ensureDefaultsExist();
+
         /** @var User $user */
         $user = Auth::user();
 

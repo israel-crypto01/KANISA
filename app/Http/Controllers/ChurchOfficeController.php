@@ -24,6 +24,7 @@ class ChurchOfficeController extends Controller
 {
     public function index(Request $request)
     {
+        Department::ensureDefaultsExist();
         $user = Auth::user();
         abort_unless($user->isSecretary() || $user->isDeacon() || $user->isAccountant(), 403);
         $month = now()->startOfMonth();
