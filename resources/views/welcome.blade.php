@@ -1016,8 +1016,15 @@
         }
 
         @media (max-width: 900px) {
-            .collage-wrapper { height: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-            .collage-center-text { position: static; transform: none; width: 100%; }
+            .collage-wrapper { height: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; animation: none; }
+            /* The desktop entrance animation ends on translate(-50%, -50%), which would
+               override "transform: none" and push the card off-screen. Use a version
+               that has no centering offset when the card is in normal flow. */
+            .collage-center-text { position: static; transform: none; width: 100%; animation-name: centerCardInStatic; }
+            @keyframes centerCardInStatic {
+                from { opacity: 0; transform: translateY(14px) scale(0.96); }
+                to { opacity: 1; transform: none; }
+            }
             .collage-img { position: static; width: 100%; height: 220px; transform: none !important; }
             .collage-wrapper::before, .hero-story-progress { display: none; }
         }
