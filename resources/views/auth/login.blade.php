@@ -248,7 +248,9 @@
 
         @media (max-width: 680px) {
             body {
-                align-items: flex-start;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
                 padding: 12px;
                 min-height: 100svh;
             }
