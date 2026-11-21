@@ -15,7 +15,15 @@ class SmsLog extends Model
         'user_id',
         'message',
         'recipients_count',
-        'status', // sent, failed, pending
+        'sent_count',
+        'failed_count',
+        'status',         // sent, partial, failed, pending
+        'beem_response',  // Raw JSON response from Beem Africa
+        'error_message',  // Error message if failed
+    ];
+
+    protected $casts = [
+        'beem_response' => 'array',
     ];
 
     public function department(): BelongsTo
@@ -26,5 +34,16 @@ class SmsLog extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /** Human-readable status badge colour for the UI */
+    public function statusColor(): string
+    {
+        return match ($this->status) {
+            'sent'    => 'green',
+            'partial' => 'yellow',
+            'failed'  => 'red',
+            default   => 'gray',
+        };
     }
 }

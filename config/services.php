@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Beem Africa SMS
+    |--------------------------------------------------------------------------
+    | Credentials from your Beem Africa dashboard (https://beem.africa).
+    | Set BEEM_API_KEY and BEEM_SECRET_KEY in your .env file.
+    | BEEM_SENDER_ID must be an approved Sender ID on your Beem account.
+    |
+    */
+    'beem' => [
+        'api_key'    => env('BEEM_API_KEY'),
+        'secret_key' => env('BEEM_SECRET_KEY'),
+        'sender_id'  => env('BEEM_SENDER_ID', 'KANISA'),
+    ],
+
 ];

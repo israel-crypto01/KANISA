@@ -941,7 +941,7 @@ class DashboardController extends Controller
         return redirect()->back()->with('success', 'Barua imetengenezwa kikamilifu!');
     }
 
-    // Leader actions: Send SMS
+    // Leader actions: Send SMS via Beem Africa
     public function sendSms(Request $request)
     {
         $request->validate([
@@ -949,30 +949,62 @@ class DashboardController extends Controller
             'message'       => 'required|string|max:160',
         ]);
 
-        $department     = Department::findOrFail($request->department_id);
-        $recipientsCount = $department->users()
+        $department = Department::findOrFail($request->department_id);
+
+        // Collect phone numbers of department members (exclude admins & mchungaji)
+        $members = $department->users()
             ->whereNotIn('users.role', ['admin', 'mchungaji'])
             ->whereDoesntHave('roles', function ($roleQuery) {
                 $roleQuery->whereIn('roles.name', ['admin', 'mchungaji']);
             })
-            ->count();
+            ->whereNotNull('users.phone')
+            ->where('users.phone', '!=', '')
+            ->pluck('users.phone')
+            ->toArray();
+
+        $recipientsCount = count($members);
+
+        // Send via Beem Africa
+        $beem   = new \App\Services\BeemSmsService();
+        $result = $beem->sendBulk($request->message, $members);
+
+        // Determine status
+        $status = match (true) {
+            $result['success'] && $result['failed'] === 0 => 'sent',
+            $result['success'] && $result['failed'] > 0   => 'partial',
+            default                                        => 'failed',
+        };
 
         $smsLog = SmsLog::create([
-            'department_id'   => $department->id,
-            'user_id'         => Auth::id(),
-            'message'         => $request->message,
-            'recipients_count'=> $recipientsCount,
-            'status'          => 'sent',
+            'department_id'    => $department->id,
+            'user_id'          => Auth::id(),
+            'message'          => $request->message,
+            'recipients_count' => $recipientsCount,
+            'sent_count'       => $result['sent'],
+            'failed_count'     => $result['failed'],
+            'status'           => $status,
+            'beem_response'    => $result['response'],
+            'error_message'    => $result['error'],
         ]);
 
         \App\Models\AuditLog::create([
-            'user_id' => Auth::id(),
-            'action' => 'SMS_SENT',
-            'description' => "SMS imetumwa kwa wanachama {$recipientsCount} wa {$department->name_sw}.",
-            'ip_address' => $request->ip(),
+            'user_id'     => Auth::id(),
+            'action'      => 'SMS_SENT',
+            'description' => "SMS imetumwa kwa wanachama {$result['sent']} wa {$department->name_sw}. Imeshindwa: {$result['failed']}.",
+            'ip_address'  => $request->ip(),
             'document_id' => (string) $smsLog->id,
         ]);
 
-        return redirect()->back()->with('success', "SMS imetumwa kwa wanachama {$recipientsCount} wa {$department->name_sw}!");
+        if ($result['success']) {
+            $msg = "SMS imetumwa kwa wanachama {$result['sent']} wa {$department->name_sw}!";
+            if ($result['failed'] > 0) {
+                $msg .= " (Imeshindwa: {$result['failed']})";
+            }
+            return redirect()->back()->with('success', $msg);
+        }
+
+        return redirect()->back()->with('error',
+            "Imeshindwa kutuma SMS: " . ($result['error'] ?? 'Hitilafu isiyojulikana kutoka Beem Africa.')
+        );
     }
 }
