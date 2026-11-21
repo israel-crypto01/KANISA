@@ -1,0 +1,39 @@
+/* Shared fluid sizing for pages that do not use the main dashboard shell. */
+:root {
+    --page-gutter: clamp(12px, 2.2vw, 30px);
+    --surface-padding: clamp(14px, 1.5vw, 22px);
+    --layout-gap: clamp(10px, 1.4vw, 18px);
+    --control-height: clamp(40px, 3.2vw, 46px);
+}
+
+html { font-size: clamp(14px, calc(13px + .2vw), 16px); }
+body { max-width: 100%; overflow-x: hidden; font-size: 1rem; }
+img, video, canvas, svg { max-width: 100%; }
+.page, .main { padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
+.card, .box, .member, .member-card { padding: var(--surface-padding); }
+.stats, .dept-grid, .columns, .grid, .members, .member-grid,
+.form-grid, .hero { gap: var(--layout-gap); }
+h1 { font-size: clamp(1.25rem, 2.6vw, 1.75rem); }
+input, select, textarea, button, .button { min-height: var(--control-height); }
+table { max-width: 100%; }
+
+@media (max-width: 900px) {
+    :root {
+        --page-gutter: clamp(14px, 2.6vw, 22px);
+        --surface-padding: clamp(14px, 2vw, 20px);
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --page-gutter: 14px;
+        --surface-padding: 16px;
+        --layout-gap: 12px;
+        --control-height: 42px;
+    }
+    .page, .main { padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
+    .hero, .columns, .grid, .form-grid, .member-grid, .members {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    input, select, textarea, button, .button { max-width: 100%; }
+}

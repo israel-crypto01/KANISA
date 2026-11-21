@@ -96,6 +96,7 @@
             border-top: 1px solid #e2e8f0;
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 <body>
 

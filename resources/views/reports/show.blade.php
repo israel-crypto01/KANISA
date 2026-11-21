@@ -130,6 +130,7 @@
             .signatures { grid-template-columns: 1fr; }
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 <body>
     <div class="toolbar">

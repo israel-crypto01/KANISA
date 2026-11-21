@@ -1121,6 +1121,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 <body>
 
