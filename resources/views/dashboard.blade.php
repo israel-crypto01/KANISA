@@ -152,6 +152,8 @@
             font-size: 1.1rem;
             cursor: pointer;
             flex-shrink: 0;
+            padding: 0;
+            line-height: 1;
         }
         .mobile-sidebar-backdrop {
             display: none;
@@ -1117,7 +1119,13 @@
     {{-- TOP BAR --}}
     <div class="topbar">
         <button type="button" class="mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Fungua menu" aria-expanded="false">
-            <i class="fa-solid fa-bars"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <!-- sidebar panel divider -->
+                <rect x="2" y="3" width="20" height="18" rx="3"/>
+                <line x1="8" y1="3" x2="8" y2="21"/>
+                <!-- left-pointing chevron -->
+                <polyline points="14 8 10 12 14 16"/>
+            </svg>
         </button>
         <div class="notification-wrap">
             <button type="button" class="notification-trigger" id="notification-trigger" aria-expanded="false" aria-controls="notification-panel">
