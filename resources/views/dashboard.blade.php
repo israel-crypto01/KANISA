@@ -3643,38 +3643,35 @@ document.addEventListener('DOMContentLoaded', toggleMarriageFields);
 
                     <style>
                         .dept-scroll-track {
-                            display: flex;
-                            flex-direction: row;
-                            gap: 15px;
-                            overflow-x: auto;
-                            padding: 15px 10%;
-                            scroll-snap-type: x mandatory;
-                            -webkit-overflow-scrolling: touch;
-                            scrollbar-width: thin;
-                            scrollbar-color: var(--accent) #f1f5f9;
+                            display: grid;
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
+                            gap: 10px;
+                            max-height: 230px;
+                            overflow-y: auto;
+                            padding: 6px 4px;
                         }
-                        .dept-scroll-track::-webkit-scrollbar { height: 6px; }
+                        .dept-scroll-track::-webkit-scrollbar { width: 6px; }
                         .dept-scroll-track::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
                         .dept-scroll-track::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
                         .dept-chip-label {
                             display: flex;
-                            flex-direction: column;
+                            flex-direction: row;
                             align-items: center;
-                            justify-content: center;
+                            justify-content: flex-start;
                             gap: 10px;
-                            min-width: 80%;
-                            max-width: 80%;
-                            padding: 24px 15px;
+                            min-width: 0;
+                            max-width: none;
+                            min-height: 64px;
+                            padding: 10px;
                             border: 2px solid var(--border);
-                            border-radius: 16px;
+                            border-radius: 12px;
                             background: #fff;
                             cursor: pointer;
-                            scroll-snap-align: center;
                             transition: border-color .2s, background .2s, transform .15s, box-shadow .2s;
-                            text-align: center;
+                            text-align: left;
                             position: relative;
-                            flex-shrink: 0;
+                            min-width: 0;
                             user-select: none;
                         }
                         .dept-chip-label:hover {
@@ -3704,12 +3701,16 @@ document.addEventListener('DOMContentLoaded', toggleMarriageFields);
                             font-size: 1.4rem;
                             color: var(--accent);
                             transition: all .3s ease;
-                            margin-bottom: 5px;
+                            margin-bottom: 0;
+                            flex: 0 0 38px;
+                            width: 38px;
+                            height: 38px;
+                            font-size: 1rem;
                         }
                         .dept-chip-label .dept-chip-check {
                             position: absolute;
-                            top: 12px; right: 15px;
-                            width: 24px; height: 24px;
+                            top: 6px; right: 6px;
+                            width: 19px; height: 19px;
                             border-radius: 50%;
                             background: var(--accent);
                             color: #fff;
@@ -3722,10 +3723,11 @@ document.addEventListener('DOMContentLoaded', toggleMarriageFields);
                         }
                         .dept-chip-label.selected .dept-chip-check { display: flex; }
                         .dept-chip-label .dept-chip-name {
-                            font-size: 1rem;
-                            font-weight: 800;
+                            font-size: .84rem;
+                            font-weight: 700;
                             color: var(--text);
                             line-height: 1.3;
+                            padding-right: 12px;
                         }
                         .dept-chip-label .dept-chip-code {
                             font-size: .8rem;
@@ -3784,6 +3786,7 @@ document.addEventListener('DOMContentLoaded', toggleMarriageFields);
                         }
                         @media (max-width:640px) {
                             .onb-role-grid { grid-template-columns: 1fr; }
+                            .dept-scroll-track { grid-template-columns: 1fr; max-height: 210px; }
                         }
                     </style>
 
@@ -3814,6 +3817,10 @@ document.addEventListener('DOMContentLoaded', toggleMarriageFields);
                             </label>
                         @endforeach
                     </div>
+
+                    @if($allDepartments->isEmpty())
+                        <p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px;">Hakuna idara zilizowekwa bado. Tafadhali wasiliana na Katibu wa Kanisa.</p>
+                    @endif
 
                     <p style="font-size:.75rem;color:var(--text-muted);margin-top:2px;text-align:center;">Umechagua: <span id="onb_check_count" style="font-weight:700;color:var(--accent);">0</span> / 5</p>
                 </div>
