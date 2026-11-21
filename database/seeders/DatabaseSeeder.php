@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             ChurchOfficeAccountsSeeder::class,
         ]);
         
-        $watotoDept = Department::where('name_sw', 'Idara ya Watoto')->first();
+        $watotoDept = Department::where('name_sw', 'Idara ya Watoto (CWI)')->first();
 
         // 1. Kiongozi Demo Account
         $kiongozi = User::firstOrCreate(

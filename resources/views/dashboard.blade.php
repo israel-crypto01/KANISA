@@ -3796,6 +3796,7 @@ document.addEventListener('DOMContentLoaded', toggleMarriageFields);
                             'Wababa' => ['fa-male', '—'],
                             'Vijana' => ['fa-users', 'CGM'],
                             'Watoto' => ['fa-child', 'CWI'],
+                            'Kusifu' => ['fa-music', 'KUSKI'],
                             'Praise' => ['fa-music', 'KUSKI'],
                         ];
                     @endphp

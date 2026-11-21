@@ -58,7 +58,7 @@ class ChurchSystemSeeder extends Seeder
                 'color' => '#3b82f6',
             ],
             [
-                'name_sw' => 'Idara ya Praise & Kwaya (KUSKI)',
+                'name_sw' => 'Idara ya Kusifu na Kuabudu (KUSKI)',
                 'name_en' => 'Praise & Choir Department (KUSKI)',
                 'description_sw' => 'Idara inayoshughulika na sifa, kuabudu na uimbaji wa kwaya (KUSKI).',
                 'description_en' => 'Praise, worship and choir singing department (KUSKI).',

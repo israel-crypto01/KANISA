@@ -54,7 +54,7 @@ class DepartmentSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name_sw' => 'Idara ya Praise & Kwaya (KUSKI)',
+                'name_sw' => 'Idara ya Kusifu na Kuabudu (KUSKI)',
                 'name_en' => 'Praise & Choir Department (KUSKI)',
                 'description_sw' => 'Idara inayoshughulika na sifa, kuabudu na uimbaji wa kwaya (KUSKI).',
                 'description_en' => 'Praise, worship and choir singing department (KUSKI).',
@@ -63,17 +63,11 @@ class DepartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'name_sw' => 'Idara ya Ujenzi',
-                'name_en' => 'Construction Department',
-                'description_sw' => 'Idara inayoshughulika na ujenzi na maendeleo ya kanisa.',
-                'description_en' => 'Department responsible for church construction and development.',
-                'icon' => 'fa-hammer',
-                'color' => '#f59e0b',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
         ];
+
+        DB::table('departments')
+            ->where('name_sw', 'Idara ya Praise & Kwaya (KUSKI)')
+            ->update(['name_sw' => 'Idara ya Kusifu na Kuabudu (KUSKI)']);
 
         foreach ($departments as $department) {
             DB::table('departments')->updateOrInsert(
