@@ -35,15 +35,14 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Beem Africa SMS
-    |--------------------------------------------------------------------------
-    | Credentials from your Beem Africa dashboard (https://beem.africa).
-    | Set BEEM_API_KEY and BEEM_SECRET_KEY in your .env file.
-    | BEEM_SENDER_ID must be an approved Sender ID on your Beem account.
-    |
-    */
+    /* DarSMS bulk SMS */
+    'darsms' => [
+        'api_key' => env('DARSMS_API_KEY'),
+        'sender_id' => env('DARSMS_SENDER_ID', 'DARSMS'),
+        'base_url' => env('DARSMS_BASE_URL', 'https://dev.darsms.co.tz/api/v1'),
+    ],
+
+    /* Legacy Beem configuration remains available during provider transition. */
     'beem' => [
         'api_key'    => env('BEEM_API_KEY'),
         'secret_key' => env('BEEM_SECRET_KEY'),

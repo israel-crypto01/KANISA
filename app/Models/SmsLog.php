@@ -17,13 +17,19 @@ class SmsLog extends Model
         'recipients_count',
         'sent_count',
         'failed_count',
+        'queued_count',
+        'excluded_count',
+        'provider',
+        'batch_id',
         'status',         // sent, partial, failed, pending
         'beem_response',  // Raw JSON response from Beem Africa
+        'provider_response',
         'error_message',  // Error message if failed
     ];
 
     protected $casts = [
         'beem_response' => 'array',
+        'provider_response' => 'array',
     ];
 
     public function department(): BelongsTo
@@ -41,6 +47,7 @@ class SmsLog extends Model
     {
         return match ($this->status) {
             'sent'    => 'green',
+            'queued'  => 'blue',
             'partial' => 'yellow',
             'failed'  => 'red',
             default   => 'gray',

@@ -2,7 +2,7 @@
 
 **Project:** KANISA church management system  
 **Prepared:** 21 November 2026  
-**Status:** Plan only; implementation has not started.
+**Status:** Initial implementation complete; delivery-status polling and live provider verification remain follow-up work.
 
 ## Goal
 
@@ -80,6 +80,14 @@ Integrate DarSMS for bulk SMS and make it possible to choose a church department
 - [DarSMS SMS API integration guide](https://www.darsms.co.tz/blog/sms-api-integration-guide-tanzania) — documents the API key header, send endpoint and payload, batch/message IDs, sender IDs, and status checks.
 - API base URL shown in the guide: `https://dev.darsms.co.tz/api/v1`.
 
-## Current scope boundary
+## Implementation record
 
-This change creates the plan file only. No application code, database schema, credentials, or provider settings have been changed.
+- Added DarSMS environment/configuration settings and a server-side provider service.
+- Connected department SMS sends to existing `users.phone` and `department_user` data, with Tanzanian number normalization and deduplication.
+- Restricted sending to department leaders for their own idara and admin/pastor accounts.
+- Added provider, batch, queued-count, excluded-recipient, and provider-response fields to SMS logs while retaining legacy Beem response data.
+- Updated the dashboard recipient count, message-length guidance, and send-history display.
+- Left the Beem service/configuration in place for transition; DarSMS does not silently fall back to Beem.
+- Replaced the key-like Beem API value in `.env.example` with an empty placeholder. Live `.env` configuration was not changed.
+- Live sending was not performed because no DarSMS account/API key was provided in the project configuration.
+- Applying the database migration could not be completed in this environment: the configured PostgreSQL PDO driver is unavailable (`could not find driver`).

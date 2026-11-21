@@ -134,6 +134,23 @@ class DashboardController extends Controller
             ->latest()
             ->get();
         $department = $mainDepartment;
+        $smsNormalizer = new \App\Services\DarSmsService();
+        $smsRecipientPhones = $department
+            ? $department->users()
+                ->whereNotIn('users.role', ['admin', 'mchungaji'])
+                ->whereDoesntHave('roles', fn ($query) => $query->whereIn('roles.name', ['admin', 'mchungaji']))
+                ->pluck('users.phone')
+                ->map(fn ($phone) => $smsNormalizer->normalizePhone((string) $phone))
+                ->filter()
+                ->unique()
+            : collect();
+        $smsRecipientCount = $smsRecipientPhones->count();
+        $smsExcludedCount = $department
+            ? max(0, $department->users()
+                ->whereNotIn('users.role', ['admin', 'mchungaji'])
+                ->whereDoesntHave('roles', fn ($query) => $query->whereIn('roles.name', ['admin', 'mchungaji']))
+                ->count() - $smsRecipientCount)
+            : 0;
         $leaderPositionCount = ($user->isAdmin() || $user->isMchungaji()) ? $allDepartments->count() : $leadershipDepartments->count();
         $showPositionCounter = !$user->isAdmin() && !$user->isMchungaji() && $leaderPositionCount > 1;
         $activeAnnouncementsQuery = function ($query) {
@@ -331,7 +348,7 @@ class DashboardController extends Controller
                 'adminDepartmentPaymentGroups', 'adminDepartmentReportGroups', 'memberSearchData',
                 'adminMembers', 'departmentMembers', 'adminDepartmentFullView', 'churchAnnouncements',
                 'visibleContributionDepartments', 'visibleContributionCampaigns',
-                'canSwitchDashboardMode', 'dashboardViewMode'
+                'canSwitchDashboardMode', 'dashboardViewMode', 'smsRecipientCount', 'smsExcludedCount'
             ));
 
         } elseif ($user->isKiongozi() || $user->isAccountant()) {
@@ -402,6 +419,8 @@ class DashboardController extends Controller
                 'allLetters', 'contributionCampaigns', 'allContributionCampaigns', 'activeDepartmentCheo',
                 'leaderDepartmentsForSwitch', 'churchAnnouncements', 'allOfferings',
                 'canSwitchDashboardMode', 'dashboardViewMode',
+                'smsRecipientCount',
+                'smsExcludedCount',
                 'visibleContributionDepartments', 'visibleContributionCampaigns'
             ));
         } else {
@@ -952,31 +971,46 @@ class DashboardController extends Controller
     {
         $request->validate([
             'department_id' => 'required|exists:departments,id',
-            'message'       => 'required|string|max:160',
+            'message'       => 'required|string|max:1600',
         ]);
 
         $department = Department::findOrFail($request->department_id);
+        /** @var User $sender */
+        $sender = Auth::user();
+        $maySendToAnyDepartment = $sender->isAdmin() || $sender->isMchungaji();
+        $leadsSelectedDepartment = $sender->departments()
+            ->where('departments.id', $department->id)
+            ->wherePivot('role', 'kiongozi')
+            ->exists();
+        abort_unless($maySendToAnyDepartment || $leadsSelectedDepartment, 403);
 
         // Collect phone numbers of department members (exclude admins & mchungaji)
-        $members = $department->users()
+        $darSms = new \App\Services\DarSmsService();
+        $rawPhoneNumbers = $department->users()
             ->whereNotIn('users.role', ['admin', 'mchungaji'])
             ->whereDoesntHave('roles', function ($roleQuery) {
                 $roleQuery->whereIn('roles.name', ['admin', 'mchungaji']);
             })
-            ->whereNotNull('users.phone')
-            ->where('users.phone', '!=', '')
-            ->pluck('users.phone')
-            ->toArray();
+            ->pluck('users.phone');
+        $phoneNumbers = $rawPhoneNumbers
+            ->map(fn ($phone) => $darSms->normalizePhone((string) $phone))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
 
-        $recipientsCount = count($members);
+        $recipientsCount = count($phoneNumbers);
+        $excludedCount = max(0, $rawPhoneNumbers->count() - $recipientsCount);
+        if ($recipientsCount === 0) {
+            return redirect()->back()->with('error', 'Hakuna namba sahihi za simu kwa idara hii.');
+        }
 
-        // Send via Beem Africa
-        $beem   = new \App\Services\BeemSmsService();
-        $result = $beem->sendBulk($request->message, $members);
+        // DarSMS reports accepted messages as queued; delivery is confirmed separately.
+        $result = $darSms->sendBulk($request->message, $phoneNumbers);
 
         // Determine status
         $status = match (true) {
-            $result['success'] && $result['failed'] === 0 => 'sent',
+            $result['success'] && $result['failed'] === 0 => 'queued',
             $result['success'] && $result['failed'] > 0   => 'partial',
             default                                        => 'failed',
         };
@@ -986,23 +1020,27 @@ class DashboardController extends Controller
             'user_id'          => Auth::id(),
             'message'          => $request->message,
             'recipients_count' => $recipientsCount,
-            'sent_count'       => $result['sent'],
+            'sent_count'       => 0,
+            'queued_count'     => $result['queued'],
+            'excluded_count'   => $excludedCount,
             'failed_count'     => $result['failed'],
             'status'           => $status,
-            'beem_response'    => $result['response'],
+            'provider'         => 'darsms',
+            'batch_id'         => $result['batch_id'],
+            'provider_response'=> $result['response'],
             'error_message'    => $result['error'],
         ]);
 
         \App\Models\AuditLog::create([
             'user_id'     => Auth::id(),
             'action'      => 'SMS_SENT',
-            'description' => "SMS imetumwa kwa wanachama {$result['sent']} wa {$department->name_sw}. Imeshindwa: {$result['failed']}.",
+            'description' => "SMS imewekwa kwenye foleni kwa wanachama {$result['queued']} wa {$department->name_sw}. Imeshindwa: {$result['failed']}.",
             'ip_address'  => $request->ip(),
             'document_id' => (string) $smsLog->id,
         ]);
 
         if ($result['success']) {
-            $msg = "SMS imetumwa kwa wanachama {$result['sent']} wa {$department->name_sw}!";
+            $msg = "SMS imewekwa kwenye foleni kwa wanachama {$result['queued']} wa {$department->name_sw}.";
             if ($result['failed'] > 0) {
                 $msg .= " (Imeshindwa: {$result['failed']})";
             }
@@ -1010,7 +1048,7 @@ class DashboardController extends Controller
         }
 
         return redirect()->back()->with('error',
-            "Imeshindwa kutuma SMS: " . ($result['error'] ?? 'Hitilafu isiyojulikana kutoka Beem Africa.')
+            "Imeshindwa kutuma SMS: " . ($result['error'] ?? 'Hitilafu isiyojulikana kutoka DarSMS.')
         );
     }
 }

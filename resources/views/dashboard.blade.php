@@ -2315,17 +2315,19 @@
             <div class="card">
                 <div class="card-title">
                     <span class="icon-box" style="background:#f3e8ff;color:#7c3aed;"><i class="fa-solid fa-mobile-screen-button"></i></span>
-                    Tuma SMS kwa Wanachama ({{ $members->count() }}) wa {{ $department->name_sw ?? '' }}
+                    Tuma SMS kwa Wanachama ({{ $smsRecipientCount ?? 0 }} namba sahihi) wa {{ $department->name_sw ?? '' }}
                 </div>
                 <form action="{{ route('sms.send') }}" method="POST">
                     @csrf
                     <input type="hidden" name="department_id" value="{{ $department->id ?? '' }}">
                     <div class="form-group">
-                        <label class="form-label">Ujumbe wa SMS <span style="color:var(--text-muted);font-weight:400;">(Max 160 herufi)</span></label>
-                        <textarea name="message" class="form-control" rows="4" maxlength="160" required placeholder="Andika ujumbe wako hapa..." id="smsText" oninput="updateSmsCount()"></textarea>
-                        <p style="text-align:right;font-size:.78rem;color:var(--text-muted);margin-top:4px;"><span id="smsCount">0</span>/160</p>
+                        <label class="form-label">Ujumbe wa SMS <span style="color:var(--text-muted);font-weight:400;">(Hadi herufi 1,600; ujumbe mrefu unaweza kutumia salio zaidi)</span></label>
+                        <textarea name="message" class="form-control" rows="4" maxlength="1600" required placeholder="Andika ujumbe wako hapa..." id="smsText" oninput="updateSmsCount()"></textarea>
+                        <p style="text-align:right;font-size:.78rem;color:var(--text-muted);margin-top:4px;"><span id="smsCount">0</span>/1600</p>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Tuma SMS</button>
+                    <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:12px;">Wapokeaji watatolewa moja kwa moja kwenye orodha ya washirika wa idara hii.</p>
+                    @if(($smsExcludedCount ?? 0) > 0)<p style="font-size:.82rem;color:#9a6700;margin-bottom:12px;">{{ $smsExcludedCount }} namba tupu, zisizo sahihi au zinazojirudia hazitajumuishwa.</p>@endif
+                    <button type="submit" class="btn btn-primary" {{ ($smsRecipientCount ?? 0) === 0 ? 'disabled' : '' }}><i class="fa-solid fa-paper-plane"></i> Tuma kwa {{ $smsRecipientCount ?? 0 }}</button>
                 </form>
             </div>
             <div class="card">
@@ -2340,8 +2342,9 @@
                             <span class="item-card-date">{{ $sms->created_at->format('d/m/Y H:i') }}</span>
                         </div>
                         <div class="item-card-body" style="color:var(--text-muted)">
+                            Idara: <strong>{{ $sms->department->name_sw ?? '—' }}</strong> · {{ strtoupper($sms->provider ?? 'beem') }} · Foleni: <strong>{{ $sms->queued_count ?? 0 }}</strong> · Zilizotengwa: <strong>{{ $sms->excluded_count ?? 0 }}</strong> ·
                             Waliopokea: <strong>{{ $sms->recipients_count }}</strong> ·
-                            <span class="badge-pill {{ $sms->status === 'sent' ? 'limit-ok' : 'limit-warn' }}">{{ ucfirst($sms->status) }}</span>
+                            <span class="badge-pill {{ in_array($sms->status, ['sent', 'queued'], true) ? 'limit-ok' : 'limit-warn' }}">{{ ucfirst($sms->status) }}</span>
                         </div>
                     </div>
                 @empty
