@@ -266,7 +266,7 @@ input:focus, select:focus, textarea:focus {
 /* ── Phones / small tablets ────────────────────────────── */
 @media (max-width: 700px) {
     :root { --o-gutter: 14px; }
-    .app { grid-template-columns: minmax(0, 1fr); }
+    .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); align-content: start; }
     .side {
         position: static;
         height: auto;
@@ -283,7 +283,8 @@ input:focus, select:focus, textarea:focus {
         border-left: 0;
         border-radius: 8px;
     }
-    .main .top { height: auto; min-height: 58px; padding-top: 8px; padding-bottom: 8px; }
+    .main .top { height: auto; min-height: 58px; padding-top: 8px; padding-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+    .main .top .user { flex-wrap: wrap; gap: 8px; }
     .card { padding: 18px; }
     .stat strong { font-size: 1.6rem; }
 }
