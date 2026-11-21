@@ -1,0 +1,56 @@
+/*
+ * Account theme for the shared Tailwind app layout (profile page).
+ * Scoped to body.account-theme, so it never touches the homepage, login,
+ * register or password pages (those use other layouts).
+ */
+.account-theme {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    background: #f5f6fa;
+    color: #1e2130;
+}
+.account-theme .min-h-screen.bg-gray-100 { background: #f5f6fa; }
+
+/* Top navigation bar: dark navy like the dashboard sidebar */
+.account-theme nav.bg-white {
+    background: #1b1f3b;
+    border-color: rgba(255, 255, 255, .08);
+}
+.account-theme nav a.border-transparent { color: rgba(255, 255, 255, .65); }
+.account-theme nav a.border-transparent:hover { color: #fff; border-color: #6366f1; }
+.account-theme nav a.border-indigo-400 { color: #fff; border-color: #6366f1; }
+.account-theme nav svg.text-gray-800 { color: #fff; }
+.account-theme nav button.bg-white { background: transparent; color: rgba(255, 255, 255, .85); }
+.account-theme nav button.bg-white:hover { color: #fff; }
+.account-theme nav button.text-gray-400 { color: rgba(255, 255, 255, .8); }
+.account-theme nav button.text-gray-400:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+/* The phone menu panel stays white so its dark text remains readable */
+.account-theme nav > .sm\:hidden { background: #fff; }
+
+/* Page heading bar */
+.account-theme header.bg-white {
+    background: #fff;
+    box-shadow: none;
+    border-bottom: 1px solid #e5e7eb;
+}
+.account-theme header h2 { color: #1e2130; font-weight: 700; }
+
+/* Cards */
+.account-theme .bg-white.shadow {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+    border-radius: 16px;
+}
+.account-theme .sm\:rounded-lg { border-radius: 16px; }
+
+/* Buttons and fields */
+.account-theme button.bg-gray-800 { background: #6366f1; border-radius: 10px; }
+.account-theme button.bg-gray-800:hover,
+.account-theme button.bg-gray-800:focus { background: #4f46e5; }
+.account-theme input:not([type="checkbox"]):not([type="radio"]),
+.account-theme select,
+.account-theme textarea { border-color: #e5e7eb; border-radius: 10px; }
+.account-theme input:not([type="checkbox"]):not([type="radio"]):focus,
+.account-theme select:focus,
+.account-theme textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+}

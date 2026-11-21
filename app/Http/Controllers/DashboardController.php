@@ -50,7 +50,9 @@ class DashboardController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        if ($user->isSecretary() || $user->isDeacon()) {
+        // Office roles use the Church Office page. An accountant who is not also a
+        // department leader has no leader/member dashboard data, so send them there too.
+        if ($user->isSecretary() || $user->isDeacon() || ($user->isAccountant() && ! $user->isKiongozi())) {
             return redirect()->route('church-office.index');
         }
 
