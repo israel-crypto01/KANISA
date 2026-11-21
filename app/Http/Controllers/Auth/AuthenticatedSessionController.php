@@ -61,6 +61,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        // Stay on the login page after logging out (instead of the homepage).
+        return redirect()->route('login')->with('status', 'Umetoka kwenye akaunti salama.');
     }
 }
