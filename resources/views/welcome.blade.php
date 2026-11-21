@@ -1017,7 +1017,7 @@
 
         @media (max-width: 900px) {
             .collage-wrapper { height: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-            .collage-center-text { position: static; transform: none; width: 100%; }
+            .collage-center-text { position: static; transform: none; width: 100%; animation: none; }
             .collage-img { position: static; width: 100%; height: 220px; transform: none !important; }
             .collage-wrapper::before, .hero-story-progress { display: none; }
         }
