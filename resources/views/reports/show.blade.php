@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
+    @include('partials.favicon')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $report->title }} - Ripoti</title>
