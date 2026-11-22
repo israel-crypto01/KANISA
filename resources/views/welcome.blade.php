@@ -172,7 +172,7 @@
             position: relative;
             overflow: hidden;
             isolation: isolate;
-            background-image: linear-gradient(rgba(226, 242, 230, 0.72), rgba(226, 242, 230, 0.82)), url('{{ asset('images/19.png') }}');
+            background-image: linear-gradient(rgba(226, 242, 230, 0.72), rgba(226, 242, 230, 0.82)), url('{{ asset('images/19.webp') }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -1166,17 +1166,17 @@
             
             <!-- Floating Photos Cluster -->
             <div class="collage-img img-top-center">
-                <img src="{{ asset('images/1.png') }}" alt="Watu wakiomba pamoja kanisani">
+                <img src="{{ asset('images/1.webp') }}" alt="Watu wakiomba pamoja kanisani">
                 <span class="photo-caption">Ibada na Maombi</span>
             </div>
 
             <div class="collage-img img-top-left">
-                <img src="{{ asset('images/2.png') }}" alt="Vijana katika ushirika wa kanisa">
+                <img src="{{ asset('images/2.webp') }}" alt="Vijana katika ushirika wa kanisa">
                 <span class="photo-caption">Karibu Kanisani</span>
             </div>
 
             <div class="collage-img img-top-right">
-                <img src="{{ asset('images/3.png') }}" alt="Kwaya na huduma ya sifa">
+                <img src="{{ asset('images/3.webp') }}" alt="Kwaya na huduma ya sifa">
                 <span class="photo-caption">Sifa na Kuabudu</span>
             </div>
 
@@ -1191,27 +1191,27 @@
             </div>
 
             <div class="collage-img img-middle-left">
-                <img src="{{ asset('images/4.png') }}" alt="Wamama katika huduma ya kanisa">
+                <img src="{{ asset('images/4.webp') }}" alt="Wamama katika huduma ya kanisa">
                 <span class="photo-caption">Ushirika wa Wamama</span>
             </div>
 
             <div class="collage-img img-middle-right">
-                <img src="{{ asset('images/5.png') }}" alt="Watoto wakifurahia huduma kanisani">
+                <img src="{{ asset('images/5.webp') }}" alt="Watoto wakifurahia huduma kanisani">
                 <span class="photo-caption">Watoto na Familia</span>
             </div>
 
             <div class="collage-img img-bottom-left">
-                <img src="{{ asset('images/6.png') }}" alt="Mafundisho ya Neno la Mungu">
+                <img src="{{ asset('images/6.webp') }}" alt="Mafundisho ya Neno la Mungu">
                 <span class="photo-caption">Mafundisho</span>
             </div>
 
             <div class="collage-img img-bottom-center">
-                <img src="{{ asset('images/7.png') }}" alt="Kikundi cha huduma kikijadiliana">
+                <img src="{{ asset('images/7.webp') }}" alt="Kikundi cha huduma kikijadiliana">
                 <span class="photo-caption">Tunapopatikana</span>
             </div>
 
             <div class="collage-img img-bottom-right">
-                <img src="{{ asset('images/8.png') }}" alt="Ibada na sifa za pamoja Kingugi">
+                <img src="{{ asset('images/8.webp') }}" alt="Ibada na sifa za pamoja Kingugi">
                 <span class="photo-caption">Mbagala Kingugi</span>
             </div>
 
@@ -1239,7 +1239,7 @@
                 <!-- Card 1: Wamama (WWI) -->
                 <div class="coverflow-card" onclick="selectDepartmentCard(0)">
                     <div class="card-img-holder">
-                        <img src="{{ asset('images/4.png') }}" alt="Idara ya Wamama WWI">
+                        <img src="{{ asset('images/4.webp') }}" alt="Idara ya Wamama WWI">
                     </div>
                     <div class="card-info">
                         <h3>Idara ya Wamama (WWI)</h3>
@@ -1250,7 +1250,7 @@
                 <!-- Card 2: Wababa -->
                 <div class="coverflow-card" onclick="selectDepartmentCard(1)">
                     <div class="card-img-holder">
-                        <img src="{{ asset('images/18.png') }}" alt="Idara ya Wababa">
+                        <img src="{{ asset('images/18.webp') }}" alt="Idara ya Wababa">
                     </div>
                     <div class="card-info">
                         <h3>Idara ya Wababa</h3>
@@ -1283,7 +1283,7 @@
                 <!-- Card 5: Praise & Kwaya (KUSKI) -->
                 <div class="coverflow-card" onclick="selectDepartmentCard(4)">
                     <div class="card-img-holder">
-                        <img src="{{ asset('images/8.png') }}" alt="Idara ya Praise & Kwaya KUSKI">
+                        <img src="{{ asset('images/8.webp') }}" alt="Idara ya Praise & Kwaya KUSKI">
                     </div>
                     <div class="card-info">
                         <h3>Praise &amp; Kwaya (KUSKI)</h3>
@@ -1342,10 +1342,10 @@
         <h2 class="section-title">Ratiba za Ibada</h2>
         
         <div class="schedule-wrapper">
-            <img src="{{ asset('images/agenda_poster.png') }}" alt="Agenda du week-end" class="schedule-poster">
+            <img src="{{ asset('images/agenda_poster.webp') }}" alt="Agenda du week-end" class="schedule-poster">
 
             <div class="schedule-banner-list">
-                <article class="schedule-banner" style="--schedule-color: rgba(141, 66, 220, 0.96); --schedule-position: center 22%; --schedule-image: url('{{ asset('images/15.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(141, 66, 220, 0.96); --schedule-position: center 22%; --schedule-image: url('{{ asset('images/15.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Jumapili</div>
@@ -1360,7 +1360,7 @@
                     </div>
                 </article>
 
-                <article class="schedule-banner" style="--schedule-color: rgba(4, 103, 185, 0.96); --schedule-position: center 18%; --schedule-image: url('{{ asset('images/4.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(4, 103, 185, 0.96); --schedule-position: center 18%; --schedule-image: url('{{ asset('images/4.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Jumatatu</div>
@@ -1375,7 +1375,7 @@
                     </div>
                 </article>
 
-                <article class="schedule-banner" style="--schedule-color: rgba(0, 162, 183, 0.96); --schedule-position: center 20%; --schedule-image: url('{{ asset('images/8.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(0, 162, 183, 0.96); --schedule-position: center 20%; --schedule-image: url('{{ asset('images/8.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Jumanne</div>
@@ -1390,7 +1390,7 @@
                     </div>
                 </article>
 
-                <article class="schedule-banner" style="--schedule-color: rgba(15, 176, 188, 0.96); --schedule-position: center 26%; --schedule-image: url('{{ asset('images/13.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(15, 176, 188, 0.96); --schedule-position: center 26%; --schedule-image: url('{{ asset('images/13.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Jumatano</div>
@@ -1405,7 +1405,7 @@
                     </div>
                 </article>
 
-                <article class="schedule-banner" style="--schedule-color: rgba(1, 110, 197, 0.96); --schedule-position: center 20%; --schedule-image: url('{{ asset('images/17.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(1, 110, 197, 0.96); --schedule-position: center 20%; --schedule-image: url('{{ asset('images/17.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Alhamisi</div>
@@ -1420,7 +1420,7 @@
                     </div>
                 </article>
 
-                <article class="schedule-banner" style="--schedule-color: rgba(234, 88, 12, 0.96); --schedule-position: center 24%; --schedule-image: url('{{ asset('images/11.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(234, 88, 12, 0.96); --schedule-position: center 24%; --schedule-image: url('{{ asset('images/11.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Ijumaa</div>
@@ -1435,7 +1435,7 @@
                     </div>
                 </article>
 
-                <article class="schedule-banner" style="--schedule-color: rgba(239, 92, 42, 0.96); --schedule-position: center 16%; --schedule-image: url('{{ asset('images/17.png') }}');">
+                <article class="schedule-banner" style="--schedule-color: rgba(239, 92, 42, 0.96); --schedule-position: center 16%; --schedule-image: url('{{ asset('images/17.webp') }}');">
                     <div class="schedule-banner-content">
                         <div>
                             <div class="schedule-day-label">Jumamosi</div>
@@ -1561,14 +1561,14 @@
                 button: 'Angalia Ratiba za Ibada',
                 featured: [3, 4, 2],
                 photos: [
-                    ["{{ asset('images/1.png') }}", 'Watu wakiomba pamoja kanisani', 'Ibada na Maombi'],
-                    ["{{ asset('images/2.png') }}", 'Vijana katika ushirika wa kanisa', 'Karibu Kanisani'],
-                    ["{{ asset('images/3.png') }}", 'Kwaya na huduma ya sifa', 'Sifa na Kuabudu'],
-                    ["{{ asset('images/4.png') }}", 'Wamama katika huduma ya kanisa', 'Ushirika wa Wamama'],
-                    ["{{ asset('images/5.png') }}", 'Watoto na huduma ya familia', 'Watoto na Familia'],
-                    ["{{ asset('images/6.png') }}", 'Mafundisho ya Neno la Mungu', 'Mafundisho'],
-                    ["{{ asset('images/7.png') }}", 'Kikundi cha huduma kikijadiliana', 'Tunapopatikana'],
-                    ["{{ asset('images/8.png') }}", 'Ibada na sifa za pamoja', 'Mbagala Kingugi']
+                    ["{{ asset('images/1.webp') }}", 'Watu wakiomba pamoja kanisani', 'Ibada na Maombi'],
+                    ["{{ asset('images/2.webp') }}", 'Vijana katika ushirika wa kanisa', 'Karibu Kanisani'],
+                    ["{{ asset('images/3.webp') }}", 'Kwaya na huduma ya sifa', 'Sifa na Kuabudu'],
+                    ["{{ asset('images/4.webp') }}", 'Wamama katika huduma ya kanisa', 'Ushirika wa Wamama'],
+                    ["{{ asset('images/5.webp') }}", 'Watoto na huduma ya familia', 'Watoto na Familia'],
+                    ["{{ asset('images/6.webp') }}", 'Mafundisho ya Neno la Mungu', 'Mafundisho'],
+                    ["{{ asset('images/7.webp') }}", 'Kikundi cha huduma kikijadiliana', 'Tunapopatikana'],
+                    ["{{ asset('images/8.webp') }}", 'Ibada na sifa za pamoja', 'Mbagala Kingugi']
                 ]
             },
             {
@@ -1580,14 +1580,14 @@
                 featured: [3, 4, 2],
                 target: '#idara',
                 photos: [
-                    ["{{ asset('images/9.png') }}", 'Watu wakiomba pamoja', 'Maombi'],
-                    ["{{ asset('images/10.png') }}", 'Vijana katika ushirika', 'Vijana CGM'],
-                    ["{{ asset('images/11.png') }}", 'Kwaya na sifa za KUSKI', 'Kwaya KUSKI'],
-                    ["{{ asset('images/12.png') }}", 'Wamama wa WWI wakihudumu', 'Wamama WWI'],
-                    ["{{ asset('images/13.png') }}", 'Watoto wa CWI wakifurahia', 'Watoto CWI'],
-                    ["{{ asset('images/15.png') }}", 'Mafundisho na maandiko', 'Mafundisho'],
-                    ["{{ asset('images/16.png') }}", 'Ujenzi na huduma za kanisa', 'Idara ya Ujenzi'],
-                    ["{{ asset('images/18.png') }}", 'Wababa katika ushirika', 'Idara ya Wababa']
+                    ["{{ asset('images/9.webp') }}", 'Watu wakiomba pamoja', 'Maombi'],
+                    ["{{ asset('images/10.webp') }}", 'Vijana katika ushirika', 'Vijana CGM'],
+                    ["{{ asset('images/11.webp') }}", 'Kwaya na sifa za KUSKI', 'Kwaya KUSKI'],
+                    ["{{ asset('images/12.webp') }}", 'Wamama wa WWI wakihudumu', 'Wamama WWI'],
+                    ["{{ asset('images/13.webp') }}", 'Watoto wa CWI wakifurahia', 'Watoto CWI'],
+                    ["{{ asset('images/15.webp') }}", 'Mafundisho na maandiko', 'Mafundisho'],
+                    ["{{ asset('images/16.webp') }}", 'Ujenzi na huduma za kanisa', 'Idara ya Ujenzi'],
+                    ["{{ asset('images/18.webp') }}", 'Wababa katika ushirika', 'Idara ya Wababa']
                 ]
             },
             {
@@ -1599,14 +1599,14 @@
                 featured: [6, 7],
                 target: '#ratiba',
                 photos: [
-                    ["{{ asset('images/15.png') }}", 'Watu wakiomba pamoja', 'Maombi ya Asubuhi'],
-                    ["{{ asset('images/16.png') }}", 'Vijana wa kanisa', 'Vijana wa Dar'],
-                    ["{{ asset('images/18.png') }}", 'Muimbaji kwenye huduma', 'Sifa'],
-                    ["{{ asset('images/9.png') }}", 'Watu katika ibada', 'Ibada'],
-                    ["{{ asset('images/10.png') }}", 'Familia na watoto', 'Familia'],
-                    ["{{ asset('images/11.png') }}", 'Mafundisho ya Neno', 'Mbagala'],
-                    ["{{ asset('images/12.png') }}", 'Muonekano wa jiji Dar es Salaam', 'Tunapopatikana'],
-                    ["{{ asset('images/13.png') }}", 'Njia ya kuelekea Kingugi', 'Karibu Kingugi']
+                    ["{{ asset('images/15.webp') }}", 'Watu wakiomba pamoja', 'Maombi ya Asubuhi'],
+                    ["{{ asset('images/16.webp') }}", 'Vijana wa kanisa', 'Vijana wa Dar'],
+                    ["{{ asset('images/18.webp') }}", 'Muimbaji kwenye huduma', 'Sifa'],
+                    ["{{ asset('images/9.webp') }}", 'Watu katika ibada', 'Ibada'],
+                    ["{{ asset('images/10.webp') }}", 'Familia na watoto', 'Familia'],
+                    ["{{ asset('images/11.webp') }}", 'Mafundisho ya Neno', 'Mbagala'],
+                    ["{{ asset('images/12.webp') }}", 'Muonekano wa jiji Dar es Salaam', 'Tunapopatikana'],
+                    ["{{ asset('images/13.webp') }}", 'Njia ya kuelekea Kingugi', 'Karibu Kingugi']
                 ]
             },
             {
@@ -1617,14 +1617,14 @@
                 button: 'Karibu Jumapili',
                 featured: [2, 5, 0],
                 photos: [
-                    ["{{ asset('images/11.png') }}", 'Watu wakiomba pamoja Jumapili', 'Ibada Jumapili'],
-                    ["{{ asset('images/12.png') }}", 'Vijana katika ushirika wa Jumapili', 'Ushirika'],
-                    ["{{ asset('images/13.png') }}", 'Sauti na muziki wa sifa', 'Sifa'],
-                    ["{{ asset('images/15.png') }}", 'Familia katika ibada ya Jumapili', 'Familia'],
-                    ["{{ asset('images/16.png') }}", 'Watoto wakifurahia huduma', 'Watoto'],
-                    ["{{ asset('images/18.png') }}", 'Kikundi kikijifunza Neno', 'Tumikia'],
-                    ["{{ asset('images/9.png') }}", 'Watu wakishirikiana kanisani', 'Kanisa Letu'],
-                    ["{{ asset('images/10.png') }}", 'Ibada ya pamoja Kingugi', 'Njoo Uabudu']
+                    ["{{ asset('images/11.webp') }}", 'Watu wakiomba pamoja Jumapili', 'Ibada Jumapili'],
+                    ["{{ asset('images/12.webp') }}", 'Vijana katika ushirika wa Jumapili', 'Ushirika'],
+                    ["{{ asset('images/13.webp') }}", 'Sauti na muziki wa sifa', 'Sifa'],
+                    ["{{ asset('images/15.webp') }}", 'Familia katika ibada ya Jumapili', 'Familia'],
+                    ["{{ asset('images/16.webp') }}", 'Watoto wakifurahia huduma', 'Watoto'],
+                    ["{{ asset('images/18.webp') }}", 'Kikundi kikijifunza Neno', 'Tumikia'],
+                    ["{{ asset('images/9.webp') }}", 'Watu wakishirikiana kanisani', 'Kanisa Letu'],
+                    ["{{ asset('images/10.webp') }}", 'Ibada ya pamoja Kingugi', 'Njoo Uabudu']
                 ]
             }
         ];
@@ -1703,7 +1703,7 @@
         const departmentStories = [
             {
                 title: 'Idara ya Wamama (WWI)',
-                image: "{{ asset('images/4.png') }}",
+                image: "{{ asset('images/4.webp') }}",
                 intro: 'Ushirika wa wamama katika maombi, mafundisho na kusaidiana.',
                 documentary: 'Idara ya Wamama inawaunganisha wamama katika maombi, mafundisho ya Neno, malezi ya familia na huduma za kusaidiana. Ni sehemu ya kujenga wanawake imara kiroho na kijamii.',
                 schedule: 'Kila Jumatatu saa 10:00 jioni hadi 12:00 jioni kwa maombi, mafundisho na ushirika.',
@@ -1712,7 +1712,7 @@
             },
             {
                 title: 'Idara ya Wababa',
-                image: "{{ asset('images/18.png') }}",
+                image: "{{ asset('images/18.webp') }}",
                 intro: 'Wababa katika mafundisho, maombi na uongozi wa familia.',
                 documentary: 'Idara ya Wababa inalenga kuwajenga wanaume kuwa viongozi bora wa kiroho, familia na jamii. Inahamasisha uwajibikaji, maombi na mshikamano.',
                 schedule: 'Jumamosi saa 10:00 jioni kwa ushirika, maombi, majadiliano na mafundisho.',
@@ -1739,7 +1739,7 @@
             },
             {
                 title: 'Praise & Kwaya (KUSKI)',
-                image: "{{ asset('images/8.png') }}",
+                image: "{{ asset('images/8.webp') }}",
                 intro: 'Huduma ya sifa, kuabudu na uimbaji wa kwaya.',
                 documentary: 'Idara ya Praise na Kwaya inaongoza kanisa katika sifa na kuabudu, ikiandaa waimbaji kwa nidhamu, ubora na moyo wa huduma.',
                 schedule: 'Jumanne na Alhamisi saa 12:00 jioni hadi 2:00 usiku kwa mazoezi ya praise na kwaya.',
