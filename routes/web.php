@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/{id}/download', [DashboardController::class, 'downloadReport'])->name('reports.download');
     Route::post('/letters', [DashboardController::class, 'storeLetter'])->name('letters.store');
     Route::post('/sms/send', [DashboardController::class, 'sendSms'])->name('sms.send');
+    Route::delete('/sms/{smsLog}', [DashboardController::class, 'destroySms'])->name('sms.destroy');
 
     // Member management (Kiongozi / Mchungaji)
     Route::post('/members/add', [DashboardController::class, 'addMember'])->name('members.add');
