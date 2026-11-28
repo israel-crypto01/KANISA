@@ -1011,28 +1011,43 @@ class DashboardController extends Controller
     public function sendSms(Request $request)
     {
         $request->validate([
-            'department_id' => 'required|exists:departments,id',
-            'message'       => 'required|string|max:1600',
+            'recipient_group' => 'nullable|in:department,members,leaders',
+            'department_id' => 'required_if:recipient_group,department|nullable|exists:departments,id',
+            'message' => 'required|string|max:1600',
         ]);
 
-        $department = Department::findOrFail($request->department_id);
         /** @var User $sender */
         $sender = Auth::user();
-        $maySendToAnyDepartment = $sender->isAdmin() || $sender->isMchungaji();
-        $leadsSelectedDepartment = $sender->departments()
-            ->where('departments.id', $department->id)
-            ->wherePivot('role', 'kiongozi')
-            ->exists();
-        abort_unless($maySendToAnyDepartment || $leadsSelectedDepartment, 403);
+        $group = $request->input('recipient_group', 'department');
+        $department = null;
+        $rawPhoneNumbers = collect();
 
-        // Collect phone numbers of department members (exclude admins & mchungaji)
+        if ($sender->isSecretary() && in_array($group, ['members', 'leaders'], true)) {
+            $recipientQuery = User::query()
+                ->where('users.status', 'active')
+                ->whereNotIn('users.role', ['admin', 'mchungaji'])
+                ->whereDoesntHave('roles', fn ($query) => $query->whereIn('roles.name', ['admin', 'mchungaji']))
+                ->whereHas('departments', function ($query) use ($group) {
+                    $query->where('department_user.role', $group === 'leaders' ? 'kiongozi' : 'mshirika');
+                });
+            $rawPhoneNumbers = $recipientQuery->pluck('users.phone');
+        } else {
+            abort_unless($group === 'department', 403);
+            $department = Department::findOrFail((int) $request->department_id);
+            $maySendToAnyDepartment = $sender->isAdmin() || $sender->isMchungaji();
+            $leadsSelectedDepartment = $sender->departments()
+                ->where('departments.id', $department->id)
+                ->wherePivot('role', 'kiongozi')
+                ->exists();
+            abort_unless($maySendToAnyDepartment || $leadsSelectedDepartment, 403);
+
+            $rawPhoneNumbers = $department->users()
+                ->whereNotIn('users.role', ['admin', 'mchungaji'])
+                ->whereDoesntHave('roles', fn ($query) => $query->whereIn('roles.name', ['admin', 'mchungaji']))
+                ->pluck('users.phone');
+        }
+
         $darSms = new \App\Services\DarSmsService();
-        $rawPhoneNumbers = $department->users()
-            ->whereNotIn('users.role', ['admin', 'mchungaji'])
-            ->whereDoesntHave('roles', function ($roleQuery) {
-                $roleQuery->whereIn('roles.name', ['admin', 'mchungaji']);
-            })
-            ->pluck('users.phone');
         $phoneNumbers = $rawPhoneNumbers
             ->map(fn ($phone) => $darSms->normalizePhone((string) $phone))
             ->filter()
@@ -1043,7 +1058,7 @@ class DashboardController extends Controller
         $recipientsCount = count($phoneNumbers);
         $excludedCount = max(0, $rawPhoneNumbers->count() - $recipientsCount);
         if ($recipientsCount === 0) {
-            return redirect()->back()->with('error', 'Hakuna namba sahihi za simu kwa idara hii.');
+            return redirect()->back()->with('error', 'Hakuna namba sahihi za simu kwa kundi ulilochagua.');
         }
 
         // DarSMS reports accepted messages as queued; delivery is confirmed separately.
@@ -1057,9 +1072,10 @@ class DashboardController extends Controller
         };
 
         $smsLog = SmsLog::create([
-            'department_id'    => $department->id,
+            'department_id'    => $department?->id,
             'user_id'          => Auth::id(),
             'message'          => $request->message,
+            'recipient_group'  => $group,
             'recipients_count' => $recipientsCount,
             'sent_count'       => 0,
             'queued_count'     => $result['queued'],
@@ -1075,13 +1091,18 @@ class DashboardController extends Controller
         \App\Models\AuditLog::create([
             'user_id'     => Auth::id(),
             'action'      => 'SMS_SENT',
-            'description' => "SMS imewekwa kwenye foleni kwa wanachama {$result['queued']} wa {$department->name_sw}. Imeshindwa: {$result['failed']}.",
+            'description' => "SMS imewekwa kwenye foleni kwa kundi {$group} ({$result['queued']} namba). Imeshindwa: {$result['failed']}.",
             'ip_address'  => $request->ip(),
             'document_id' => (string) $smsLog->id,
         ]);
 
         if ($result['success']) {
-            $msg = "SMS imewekwa kwenye foleni kwa wanachama {$result['queued']} wa {$department->name_sw}.";
+            $groupLabel = match ($group) {
+                'members' => 'washirika wa idara zote',
+                'leaders' => 'viongozi wa idara zote',
+                default => "wanachama wa {$department->name_sw}",
+            };
+            $msg = "SMS imewekwa kwenye foleni kwa {$result['queued']} {$groupLabel}.";
             if ($result['failed'] > 0) {
                 $msg .= " (Imeshindwa: {$result['failed']})";
             }

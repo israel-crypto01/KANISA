@@ -14,6 +14,7 @@ use App\Models\ServiceVisitor;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\ContributionCampaign;
+use App\Models\SmsLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -109,6 +110,7 @@ class ChurchOfficeController extends Controller
             'letters' => $this->filterByMonthWeek($letterQuery, $request, 'letter', 'created_at')->take(30)->get(),
             'recordYears' => $this->recordYears(),
             'reports' => Report::with(['user', 'department'])->latest('report_date')->take(10)->get(),
+            'smsLogs' => SmsLog::with('user')->latest()->take(20)->get(),
             'praiseLeaders' => $praiseLeaders,
             'deacons' => $deacons,
             'elders' => $elders,
