@@ -380,7 +380,11 @@ class DashboardController extends Controller
             $reports       = $department ? Report::where('department_id', $department->id)->latest()->get() : collect();
             $letters       = $department ? Letter::where('department_id', $department->id)->latest()->get() : collect();
             $allLetters    = $user->isMchungaji() ? Letter::with(['user', 'department'])->latest()->get() : collect();
-            $smsLogs       = $department ? SmsLog::where('department_id', $department->id)->latest()->get() : collect();
+            $smsLogs       = SmsLog::when($department, function ($query) use ($department, $user) {
+                $query->where('department_id', $department->id)
+                    ->orWhere('user_id', $user->id);
+            }, fn ($query) => $query->where('user_id', $user->id))
+                ->latest()->get();
             $myPayments    = \App\Models\Payment::with('contributionCampaign.department')->where('user_id', $user->id)->latest()->get();
             $allPayments   = \App\Models\Payment::with(['user', 'contributionCampaign.department'])
                 ->when(!$user->isMchungaji() && !$user->isAccountant(), function ($query) use ($deptIds, $activeDeptId) {
@@ -997,11 +1001,12 @@ class DashboardController extends Controller
         /** @var User $user */
         $user = Auth::user();
         $mayDeleteAny = $user->isAdmin() || $user->isMchungaji();
+        $mayDeleteOwn = $user->isKiongozi() && (int) $smsLog->user_id === (int) $user->id;
         $leadsDepartment = $user->departments()
             ->where('departments.id', $smsLog->department_id)
             ->wherePivot('role', 'kiongozi')
             ->exists();
-        abort_unless($mayDeleteAny || $leadsDepartment, 403);
+        abort_unless($mayDeleteAny || $mayDeleteOwn || $leadsDepartment, 403);
 
         $smsLog->delete();
 
