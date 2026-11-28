@@ -1000,7 +1000,7 @@ class DashboardController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $mayDeleteAny = $user->isAdmin() || $user->isMchungaji();
+        $mayDeleteAny = $user->isAdmin() || $user->isMchungaji() || $user->isSecretary();
         $mayDeleteOwn = $user->isKiongozi() && (int) $smsLog->user_id === (int) $user->id;
         $leadsDepartment = $user->departments()
             ->where('departments.id', $smsLog->department_id)
@@ -1010,7 +1010,11 @@ class DashboardController extends Controller
 
         $smsLog->delete();
 
-        return redirect()->back()->with('success', 'SMS imefutwa kwenye historia.');
+        $redirect = $user->isSecretary()
+            ? redirect()->route('church-office.index', ['section' => 'sms'])
+            : redirect()->back();
+
+        return $redirect->with('success', 'SMS imefutwa kwenye historia.');
     }
 
     public function sendSms(Request $request)
