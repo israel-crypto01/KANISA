@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/reports', [DashboardController::class, 'storeReport'])->name('reports.store');
     Route::get('/reports/{id}', [DashboardController::class, 'showReport'])->name('reports.show');
     Route::get('/reports/{id}/download', [DashboardController::class, 'downloadReport'])->name('reports.download');
+    Route::delete('/reports/{id}', [DashboardController::class, 'destroyReport'])->name('reports.destroy');
     Route::post('/letters', [DashboardController::class, 'storeLetter'])->name('letters.store');
     Route::post('/sms/send', [DashboardController::class, 'sendSms'])->name('sms.send');
 

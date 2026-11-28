@@ -2132,6 +2132,15 @@
                             <a href="{{ route('reports.download', $r->id) }}" class="btn btn-outline btn-sm" target="_blank">
                                 <i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> Pakua PDF
                             </a>
+                            @if($r->user_id === $user->id && $user->isDepartmentLeaderAccountant((int) $r->department_id))
+                                <form action="{{ route('reports.destroy', $r->id) }}" method="POST" onsubmit="return confirm('Una uhakika unataka kufuta ripoti hii?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline btn-sm" style="color:#dc2626;border-color:#fecaca;">
+                                        <i class="fa-solid fa-trash"></i> Futa
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 @empty

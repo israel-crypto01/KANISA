@@ -915,6 +915,31 @@ class DashboardController extends Controller
         return $pdf->download($filename);
     }
 
+    public function destroyReport(Request $request, $id)
+    {
+        $report = Report::findOrFail($id);
+        /** @var User $user */
+        $user = Auth::user();
+
+        abort_unless(
+            $report->user_id === $user->id && $user->isDepartmentLeaderAccountant((int) $report->department_id),
+            403,
+            'Hauruhusiwi kufuta ripoti hii.'
+        );
+
+        \App\Models\AuditLog::create([
+            'user_id' => $user->id,
+            'action' => 'REPORT_DELETED',
+            'description' => "Ripoti '{$report->title}' imefutwa.",
+            'ip_address' => $request->ip(),
+            'document_id' => (string) $report->id,
+        ]);
+
+        $report->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Ripoti imefutwa kikamilifu.');
+    }
+
     private function authorizeReportAccess(Report $report): void
     {
         /** @var User $user */

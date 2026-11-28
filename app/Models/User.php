@@ -138,4 +138,18 @@ class User extends Authenticatable
             ->wherePivot('cheo', 'Mhasibu')
             ->exists();
     }
+
+    public function isDepartmentLeaderAccountant(int $departmentId): bool
+    {
+        return $this->departments()
+            ->where('departments.id', $departmentId)
+            ->wherePivot('role', 'kiongozi')
+            ->where(function ($query) {
+                $query->where('department_user.cheo', 'Mhasibu');
+                if ($this->isAccountant()) {
+                    $query->orWhere('department_user.role', 'kiongozi');
+                }
+            })
+            ->exists();
+    }
 }
