@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
+    @include('partials.favicon')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -2348,7 +2349,12 @@
                     <div class="item-card" style="border-left-color:#8b5cf6;background:#faf5ff;">
                         <div class="item-card-header">
                             <span class="item-card-title">{{ Str::limit($sms->message, 60) }}</span>
-                            <span class="item-card-date">{{ $sms->created_at->format('d/m/Y H:i') }}</span>
+                            <span class="item-card-date">{{ $sms->created_at->format('d/m/Y H:i') }}
+                                <form method="POST" action="{{ route('sms.destroy', $sms->id) }}" style="display:inline;margin-left:10px;" onsubmit="return confirm('Futa SMS hii kwenye historia?');">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" title="Futa" style="border:0;background:none;color:#dc2626;cursor:pointer;font-size:.9rem;"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </span>
                         </div>
                         <div class="item-card-body" style="color:var(--text-muted)">
                             Idara: <strong>{{ $sms->department->name_sw ?? '—' }}</strong> · {{ strtoupper($sms->provider ?? 'beem') }} · Foleni: <strong>{{ $sms->queued_count ?? 0 }}</strong> · Zilizotengwa: <strong>{{ $sms->excluded_count ?? 0 }}</strong> ·

@@ -992,6 +992,22 @@ class DashboardController extends Controller
     }
 
     // Leader actions: Send SMS via Beem Africa
+    public function destroySms(SmsLog $smsLog)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $mayDeleteAny = $user->isAdmin() || $user->isMchungaji();
+        $leadsDepartment = $user->departments()
+            ->where('departments.id', $smsLog->department_id)
+            ->wherePivot('role', 'kiongozi')
+            ->exists();
+        abort_unless($mayDeleteAny || $leadsDepartment, 403);
+
+        $smsLog->delete();
+
+        return redirect()->back()->with('success', 'SMS imefutwa kwenye historia.');
+    }
+
     public function sendSms(Request $request)
     {
         $request->validate([

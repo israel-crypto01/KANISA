@@ -29,7 +29,8 @@
     --soft-green: var(--o-accent-soft);
 }
 
-html, body { max-width: 100%; overflow-x: hidden; }
+/* clip (not hidden): hidden makes <body> a scroll container and breaks the sticky sidebar */
+html, body { max-width: 100%; overflow-x: clip; }
 body {
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: 14px;
